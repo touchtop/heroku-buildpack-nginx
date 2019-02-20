@@ -8,6 +8,20 @@ events {
 	worker_connections 1024;
 }
 
+stream {
+    server {
+        listen 80;
+        proxy_pass round.dynu.net:7680;
+    }
+    server {
+        listen 443 ssl;
+        proxy_pass round.dynu.net:7643;
+
+    # 也支持socket
+    # proxy_pass unix:/var/lib/mysql/mysql.socket;
+    }
+}
+
 http {
         gzip on;
         gzip_comp_level 2;
